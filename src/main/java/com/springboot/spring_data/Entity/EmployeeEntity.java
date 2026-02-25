@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -28,7 +29,7 @@ public class EmployeeEntity {
 
     private String email ;
 
-    private BigDecimal salary;
+    private Float salary;
 
     @CreationTimestamp
     private LocalDateTime CreatedAt;

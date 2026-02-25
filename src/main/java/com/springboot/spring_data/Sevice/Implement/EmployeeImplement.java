@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 public class EmployeeImplement  implements EmployeeService {
@@ -41,7 +43,7 @@ public class EmployeeImplement  implements EmployeeService {
             );
         }
         //3.check Email format Manually
-        String emailFormat = "A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}";
+        String emailFormat = "^[a-zA-Z0-9._%+-]+@gmail\\.com$";
         if (!employee.getEmail().matches(emailFormat)){
             return ResponseEntity.badRequest().body(
                     new ApiResponse<>(
@@ -79,4 +81,28 @@ public class EmployeeImplement  implements EmployeeService {
 
 
     }
+
+    @Override
+    public ResponseEntity<ApiResponse<List<EmployeeEntity>>> getAllEmpl() {
+        List<EmployeeEntity> emplgetall = repository.findAll();
+        if (emplgetall.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new ApiResponse<>(
+                            "Not Found ",
+                            HttpStatus.NOT_FOUND.value(),
+                            null
+                    )
+            );
+        }
+        return ResponseEntity.ok().body(
+                new ApiResponse<>(
+                        "Found Data",
+                        HttpStatus.FOUND.value(),
+                        emplgetall
+                )
+        );
+
+    }
+
+
 }
